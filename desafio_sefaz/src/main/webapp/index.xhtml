@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+		
+		
+	<title>Desafio Sefaz</title>
+</h:head>
+<h:body styleClass="blue-grey darken-1">
+
+	<h:form>
+	<p:growl id="message" showDetail="true" />
+	<div class="valign-wrapper">
+		<div class="container">
+			<div class="ceter-aling">
+				<div class="row">
+					<div class="col s6 offset-s3">
+						<div class="card">
+							<div class="card-content">
+								<div class="row">
+									<div class="col s12 input-field">
+										<h:inputText id="login" value="#{loginBean.email}" required="true" requiredMessage="Informe o email"/>
+										<h:outputLabel value="Email" for="login" />
+									</div>
+									<div class="col s12 input-field">
+										<p:password id="pass" value="#{loginBean.pass}" required="true" requiredMessage="Informe a senha" />
+										<h:outputLabel value="Senha" for="pass" />
+									</div>
+									<div class="col s12 input-field">
+										<h:commandButton styleClass="btn btn-small" action="#{loginBean.Login()}" value="Login" update="@form" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</h:form>
+        
+			
+</h:body>
+</html>

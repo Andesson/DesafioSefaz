@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+	<title>Desafio Sefaz</title>
+</h:head>
+<h:body>
+
+	<!-- Navbar -->
+	<h:form>
+		<p:toolbar>
+			<f:facet name="left">
+				<p:commandButton value="Novo" action="#{userBean.novo()}"
+					update="novoUsuarioForm" />
+			</f:facet>
+
+			<f:facet name="right">
+				<p:menuButton value="Opções">
+					<p:menuitem value="Logout" action="#{userBean.logout()}" />
+				</p:menuButton>
+			</f:facet>
+
+		</p:toolbar>
+
+		<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ casdatro de usuario ~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+		<div class="divider"></div>
+
+	</h:form>
+	<h:form id="novoUsuarioForm">
+		<p:growl id="message" showDetail="true" />
+		<p:panel style="margin-bottom:20px">
+			<p:panelGrid columns="2" cellpadding="1" layout="grid"
+				styleClass="showcase-text-align-center">
+
+				<p:outputLabel for="email" value="E-mail" />
+				<p:inputText id="email" value="#{userBean.user.email}"
+					required="true" requiredMessage="Informe um E-mail"
+					validatorMessage="E-mail incorreto">
+					<f:validateRegex
+						pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					<p:ajax event="blur" update="novoUsuarioForm" listener="#{userBean.isValidoEmail()}" />
+				</p:inputText>
+				<p:outputLabel for="nome" value="Nome" />
+				<p:inputText id="nome" value="#{userBean.user.nome}" required="true"
+					requiredMessage="Informe Nome" />
+
+				<p:outputLabel value="Senha: " />
+				<p:password id="senha" match="senha2" value="#{userBean.user.senha}"
+					size="12" maxlength="20" required="true"
+					requiredMessage="Informe senha"
+					validatorMessage="Erro na confirmação da senha">
+				</p:password>
+				<p:outputLabel value="Confirmar senha: " />
+				<p:password id="senha2" size="12" maxlength="20" />
+			</p:panelGrid>
+				<p:fieldset id="fieldContato">
+			<p:panelGrid columns="2" cellpadding="2" layout="grid">
+					<p:outputLabel for="ddd" value="DDD" />
+					<p:inputText id="ddd" value="#{userBean.fone.ddd}" maxlength="3"
+						required="false" />
+					<p:outputLabel for="fone" value="Telefone" />
+					<p:inputText id="fone" value="#{userBean.fone.numero}"
+						required="false" />
+					<p:selectOneMenu id="tipoFone" value="#{userBean.fone.tipo}"
+						style="width:125px">
+						<f:selectItem itemLabel="Celular" itemValue="celular" />
+						<f:selectItem itemLabel="Residencia" itemValue="Residencia" />
+					</p:selectOneMenu>
+					<p:commandButton value="+" action="#{userBean.addFone()}"
+						update="fieldContato listaFones message" />
+			</p:panelGrid>
+					<p:dataList id="listaFones" value="#{userBean.listFone}"
+						var="fone" type="ordered">
+						<f:facet name="header">Contato</f:facet>
+        				 #{fone.ddd} #{fone.numero} - #{fone.tipo}
+    				</p:dataList>
+				</p:fieldset>
+
+				<p:commandButton value="Salvar" action="#{userBean.salvar()}"
+					update="@form message lista "></p:commandButton>
+		</p:panel>
+		<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Lista de usuarios ~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+	</h:form>
+	<h:form id="lista">
+		<div class="divider"></div>
+		<p:dataTable id="listaUser" var="usuario"
+			value="#{userBean.listarUser()}">
+			<p:column headerText="Nome">
+				<h:outputText value="#{usuario.nome}" />
+			</p:column>
+
+			<p:column headerText="Email">
+				<h:outputText value="#{usuario.email}" />
+			</p:column>
+			<p:column headerText="">
+				<h:commandButton action="#{userBean.editarUser(usuario.id)}"
+					value="Editar" />
+			</p:column>
+			<p:column headerText="">
+				<h:commandButton action="#{userBean.deletarUser(usuario.id)}"
+					value="Deletar" />
+					
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+
+</h:body>
+</html>
